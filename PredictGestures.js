@@ -5,6 +5,7 @@ var currentNumHands = 0;
 var numSamples = 2;
 var testingSampleIndex = 0;
 var predictedClassLabels = nj.zeros(2);
+var FramesOfData = nj.zeros([5,4,6]);
 const knnClassifier = ml5.KNNClassifier();
 
 function Train(){
@@ -45,19 +46,19 @@ function HandleBone(bone,thick,stroke,fingerIndex,interactionBox){
     var normalizedPrevJoint = interactionBox.normalizePoint(bone.prevJoint, true);
     var normalizedNextJoint = interactionBox.normalizePoint(bone.nextJoint, true);
     //create new varaibles x , y , z , x1, y1, z1 , set to the nextJoint and PrevJoint 
-//    x = normalizedPrevJoint[0];
-//    y = normalizedPrevJoint[1];
-//    z = normalizedPrevJoint[2];
-//    x1 = normalizedNextJoint[0];
-//    y1 = normalizedNextJoint[1];
-//    z1 = normalizedNextJoint[2];
+      x = normalizedPrevJoint[0];
+      y = normalizedPrevJoint[1];
+      z = normalizedPrevJoint[2];
+      x1 = normalizedNextJoint[0];
+      y1 = normalizedNextJoint[1];
+      z1 = normalizedNextJoint[2];
      
-//    FramesOfData.set(fingerIndex.type,bone.type,0,currentSamples,x);
-//    FramesOfData.set(fingerIndex.type,bone.type,1,currentSamples,y);
-//    FramesOfData.set(fingerIndex.type,bone.type,2,currentSamples,z);
-//    FramesOfData.set(fingerIndex.type,bone.type,3,currentSamples,x1);
-//    FramesOfData.set(fingerIndex.type,bone.type,4,currentSamples,y1);
-//    FramesOfData.set(fingerIndex.type,bone.type,5,currentSamples,z1);
+      FramesOfData.set(fingerIndex.type,bone.type,0,x);
+      FramesOfData.set(fingerIndex.type,bone.type,1,y);
+      FramesOfData.set(fingerIndex.type,bone.type,2,z);
+      FramesOfData.set(fingerIndex.type,bone.type,3,x1);
+      FramesOfData.set(fingerIndex.type,bone.type,4,y1);
+      FramesOfData.set(fingerIndex.type,bone.type,5,z1);
     //expanding the canvas and apply new scaling 
     var canvasX = window.innerWidth * normalizedPrevJoint[0];
     var canvasY = window.innerHeight * (1 - normalizedPrevJoint[1]);
@@ -121,5 +122,6 @@ Leap.loop(controllerOptions,function(frame){
          Train();    
     }
     Handleframe(frame);
+    console.log(FramesOfData);
     Test();
 });
