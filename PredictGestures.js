@@ -4,6 +4,9 @@ var previousNumHands = 0
 var currentNumHands = 0;
 var numSamples = 2;
 var testingSampleIndex = 0;
+var predictionAccuracyAverage =0;
+var numberPrediction=0;
+//var testingSampleIndex = 0;
 var predictedClassLabels = nj.zeros(2);
 var oneFrameOfData = nj.zeros([5,4,6]);
 const knnClassifier = ml5.KNNClassifier();
@@ -19,17 +22,20 @@ function Train(){
 }
 
 function Test(){
-      var currentFeatures =  oneFrameOfData.pick(null,null,null,testingSampleIndex).reshape(1,120);
+      var currentFeatures =  oneFrameOfData.pick(null,null,null).reshape(1,120);
       knnClassifier.classify(currentFeatures.tolist(),GotResults);
       
 }
 function GotResults(err, result){
-      predictedClassLabels.set(testingSampleIndex, parseInt(result.label));
-      console.log(testingSampleIndex + ": " + predictedClassLabels.get(testingSampleIndex));
-      testingSampleIndex += 1;
-      if (testingSampleIndex >=100){
-          testingSampleIndex = 0;
-      }
+      var currentPrediction = result.label;
+      //console.log(currentPrediction);
+      predictedClassLabels.set(parseInt(result.label));
+      numberPrediction+=1;
+      //console.log(testingSampleIndex + ": " + predictedClassLabels.get(testingSampleIndex));
+      predictionAccuracyAverage = (((numberPrediction-1)*predictionAccuracyAverage) + (currentPrediction==7))/numberPrediction;
+      //console.log(predictionAccuracyAverage);
+      console.log(numberPrediction + " " + predictionAccuracyAverage + " " + currentPrediction);
+  
 }
 function Handleframe(frame){
         var interactionBox = frame.interactionBox;
