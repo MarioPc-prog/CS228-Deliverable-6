@@ -22,6 +22,7 @@ function Train(){
 }
 
 function Test(){
+      CenterData();
       var currentFeatures =  oneFrameOfData.pick(null,null,null).reshape(1,120);
       knnClassifier.classify(currentFeatures.tolist(),GotResults);
       
@@ -34,7 +35,7 @@ function GotResults(err, result){
       //console.log(testingSampleIndex + ": " + predictedClassLabels.get(testingSampleIndex));
       predictionAccuracyAverage = (((numberPrediction-1)*predictionAccuracyAverage) + (currentPrediction==7))/numberPrediction;
       //console.log(predictionAccuracyAverage);
-      console.log(numberPrediction + " " + predictionAccuracyAverage + " " + currentPrediction);
+      //console.log(numberPrediction + " " + predictionAccuracyAverage + " " + currentPrediction);
   
 }
 function Handleframe(frame){
@@ -124,6 +125,29 @@ function HandleHand(hand,interactionBox){
             
         }
     }
+function CenterData(){
+     var xValues = oneFrameOfData.slice([],[],[0,6,3]);
+     //console.log(xValues.shape);
+     var currentMean = xValues.mean();
+     console.log("before: " + currentMean);
+     var horizontalShift = (0.5 - currentMean);
+     
+     for (var i = 0; i < 5; i++) {     
+    for (var j = 0; j < 4; j++) {
+      var currentX = oneFrameOfData.get(i, j, 0);
+      var shiftedX = currentX + horizontalShift;
+      oneFrameOfData.set(i, j, 0, shiftedX);
+      currentX = oneFrameOfData.get(i, j, 3);
+      shiftedX = currentX + horizontalShift;
+      oneFrameOfData.set(i, j, 3, shiftedX);
+        
+    }
+    }
+    xValues = oneFrameOfData.slice([],[],[0,6,3]);
+    currentMean = xValues.mean();
+    horizontalShift = (0.5 - currentMean);
+    console.log("after: " + currentMean);;
+}
 Leap.loop(controllerOptions,function(frame){
     clear();
      if (trainingCompleted === false){
