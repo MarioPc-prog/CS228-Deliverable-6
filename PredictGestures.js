@@ -24,6 +24,7 @@ function Train(){
 function Test(){
       CenterXData();
       CenterYData();
+      CenterZData();
       var currentFeatures =  oneFrameOfData.pick(null,null,null).reshape(1,120);
       knnClassifier.classify(currentFeatures.tolist(),GotResults);
       
@@ -36,7 +37,7 @@ function GotResults(err, result){
       //console.log(testingSampleIndex + ": " + predictedClassLabels.get(testingSampleIndex));
       predictionAccuracyAverage = (((numberPrediction-1)*predictionAccuracyAverage) + (currentPrediction==7))/numberPrediction;
       //console.log(predictionAccuracyAverage);
-      //console.log(numberPrediction + " " + predictionAccuracyAverage + " " + currentPrediction);
+      console.log(numberPrediction + " " + predictionAccuracyAverage + " " + currentPrediction);
   
 }
 function Handleframe(frame){
@@ -134,15 +135,15 @@ function CenterXData(){
      var horizontalShift = (0.5 - currentMean);
      
      for (var i = 0; i < 5; i++) {     
-    for (var j = 0; j < 4; j++) {
-      var currentX = oneFrameOfData.get(i, j, 0);
-      var shiftedX = currentX + horizontalShift;
-      oneFrameOfData.set(i, j, 0, shiftedX);
-      currentX = oneFrameOfData.get(i, j, 3);
-      shiftedX = currentX + horizontalShift;
-      oneFrameOfData.set(i, j, 3, shiftedX);
-        
-    }
+        for (var j = 0; j < 4; j++) {
+          var currentX = oneFrameOfData.get(i, j, 0);
+          var shiftedX = currentX + horizontalShift;
+          oneFrameOfData.set(i, j, 0, shiftedX);
+          currentX = oneFrameOfData.get(i, j, 3);
+          shiftedX = currentX + horizontalShift;
+          oneFrameOfData.set(i, j, 3, shiftedX);
+
+        }
     }
     xValues = oneFrameOfData.slice([],[],[0,6,3]);
     currentMean = xValues.mean();
@@ -151,28 +152,53 @@ function CenterXData(){
 }
 function CenterYData(){
     var yValues = oneFrameOfData.slice([],[],[1,6,3]);
-     console.log(yValues.shape);
+     //console.log(yValues.shape);
      var currentMean = yValues.mean();
-     console.log("before: " + currentMean);
+     //console.log("before: " + currentMean);
      var horizontalShift = (0.5 - currentMean);
      
      for (var i = 0; i < 5; i++) {     
-    for (var j = 0; j < 4; j++) {
-      var currentY = oneFrameOfData.get(i, j, 1);
-      var shiftedY = currentY + horizontalShift;
-      oneFrameOfData.set(i, j, 1, shiftedY);
-      //BOTTOM
-      currentY = oneFrameOfData.get(i, j, 4);
-      shiftedY = currentY + horizontalShift;
-      oneFrameOfData.set(i, j, 4, shiftedY);
-        
-    }
+        for (var j = 0; j < 4; j++) {
+          var currentY = oneFrameOfData.get(i, j, 1);
+          var shiftedY = currentY + horizontalShift;
+          oneFrameOfData.set(i, j, 1, shiftedY);
+          //BOTTOM
+          currentY = oneFrameOfData.get(i, j, 4);
+          shiftedY = currentY + horizontalShift;
+          oneFrameOfData.set(i, j, 4, shiftedY);
+
+        }
     }
    
     yValues = oneFrameOfData.slice([],[],[1,6,3]);
     currentMean = yValues.mean();
     horizontalShift = (0.5 - currentMean);
-    console.log("after: " + currentMean);;
+    //console.log("after: " + currentMean);;
+    
+}
+function CenterZData(){
+    var zValues = oneFrameOfData.slice([],[],[2,6,3]);
+     //console.log(yValues.shape);
+     var currentMean = zValues.mean();
+     //console.log("before: " + currentMean);
+     var horizontalShift = (0.5 - currentMean);
+     for (var i = 0; i < 5; i++) {     
+        for (var j = 0; j < 4; j++) {
+          var currentZ = oneFrameOfData.get(i, j, 2);
+          var shiftedZ = currentZ + horizontalShift;
+          oneFrameOfData.set(i, j, 2, shiftedZ);
+          //BOTTOM
+          currentZ = oneFrameOfData.get(i, j, 5);
+          shiftedZ = currentZ + horizontalShift;
+          oneFrameOfData.set(i, j, 5, shiftedZ);
+
+        }
+    }
+   
+    zValues = oneFrameOfData.slice([],[],[2,6,3]);
+    currentMean = zValues.mean();
+    horizontalShift = (0.5 - currentMean);
+    //console.log("after: " + currentMean);;
     
 }
 Leap.loop(controllerOptions,function(frame){
