@@ -36,12 +36,12 @@ function HandleBone(bone,thick,stroke,fingerIndex,interactionBox){
     y1 = normalizedNextJoint[1];
     z1 = normalizedNextJoint[2];
      
-    FramesOfData.set(fingerIndex.type,bone.type,0,currentSamples,x);
-    FramesOfData.set(fingerIndex.type,bone.type,1,currentSamples,y);
-    FramesOfData.set(fingerIndex.type,bone.type,2,currentSamples,z);
-    FramesOfData.set(fingerIndex.type,bone.type,3,currentSamples,x1);
-    FramesOfData.set(fingerIndex.type,bone.type,4,currentSamples,y1);
-    FramesOfData.set(fingerIndex.type,bone.type,5,currentSamples,z1);
+//    FramesOfData.set(fingerIndex.type,bone.type,0,currentSamples,x);
+//    FramesOfData.set(fingerIndex.type,bone.type,1,currentSamples,y);
+//    FramesOfData.set(fingerIndex.type,bone.type,2,currentSamples,z);
+//    FramesOfData.set(fingerIndex.type,bone.type,3,currentSamples,x1);
+//    FramesOfData.set(fingerIndex.type,bone.type,4,currentSamples,y1);
+//    FramesOfData.set(fingerIndex.type,bone.type,5,currentSamples,z1);
     //expanding the canvas and apply new scaling 
     var canvasX = window.innerWidth * normalizedPrevJoint[0];
     var canvasY = window.innerHeight * (1 - normalizedPrevJoint[1]);
