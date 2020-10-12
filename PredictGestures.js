@@ -30,7 +30,9 @@ function Train(){
         features = train5.pick(null, null, null, i).reshape(1,120);
         knnClassifier.addExample(features.tolist(),5);
         features = train6.pick(null, null, null, i).reshape(1,120);
-        knnClassifier.addExample(features.tolist(),5);
+        knnClassifier.addExample(features.tolist(),6);
+        features = train8.pick(null, null, null, i).reshape(1,120);
+        knnClassifier.addExample(features.tolist(),8);
   }
 }
 
@@ -49,7 +51,7 @@ function GotResults(err, result){
       predictedClassLabels.set(parseInt(result.label));
       numberPrediction+=1;
       //console.log(testingSampleIndex + ": " + predictedClassLabels.get(testingSampleIndex));
-      predictionAccuracyAverage = (((numberPrediction-1)*predictionAccuracyAverage) + (currentPrediction==5))/numberPrediction;
+      predictionAccuracyAverage = (((numberPrediction-1)*predictionAccuracyAverage) + (currentPrediction==8))/numberPrediction;
       //console.log(predictionAccuracyAverage);
       //console.log(numberPrediction + " " + predictionAccuracyAverage + " " + currentPrediction);
       console.log(predictionAccuracyAverage);
