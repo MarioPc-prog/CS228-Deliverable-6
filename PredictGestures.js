@@ -19,6 +19,18 @@ function Train(){
         knnClassifier.addExample(features.tolist(),7);
         features = train9.pick(null, null, null, i).reshape(1,120);
         knnClassifier.addExample(features.tolist(),9);
+        features = train1.pick(null, null, null, i).reshape(1,120);
+        knnClassifier.addExample(features.tolist(),1);
+        features = train0.pick(null, null, null, i).reshape(1,120);
+        knnClassifier.addExample(features.tolist(),0);
+        features = train3.pick(null, null, null, i).reshape(1,120);
+        knnClassifier.addExample(features.tolist(),3);
+        features = train4.pick(null, null, null, i).reshape(1,120);
+        knnClassifier.addExample(features.tolist(),4);
+        features = train5.pick(null, null, null, i).reshape(1,120);
+        knnClassifier.addExample(features.tolist(),5);
+        features = train6.pick(null, null, null, i).reshape(1,120);
+        knnClassifier.addExample(features.tolist(),5);
   }
 }
 
@@ -37,7 +49,7 @@ function GotResults(err, result){
       predictedClassLabels.set(parseInt(result.label));
       numberPrediction+=1;
       //console.log(testingSampleIndex + ": " + predictedClassLabels.get(testingSampleIndex));
-      predictionAccuracyAverage = (((numberPrediction-1)*predictionAccuracyAverage) + (currentPrediction==digit))/numberPrediction;
+      predictionAccuracyAverage = (((numberPrediction-1)*predictionAccuracyAverage) + (currentPrediction==5))/numberPrediction;
       //console.log(predictionAccuracyAverage);
       //console.log(numberPrediction + " " + predictionAccuracyAverage + " " + currentPrediction);
       console.log(predictionAccuracyAverage);
