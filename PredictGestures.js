@@ -6,6 +6,7 @@ var numSamples = 2;
 var testingSampleIndex = 0;
 var predictionAccuracyAverage =0;
 var numberPrediction=0;
+var digit = 7;
 //var testingSampleIndex = 0;
 var predictedClassLabels = nj.zeros(2);
 var oneFrameOfData = nj.zeros([5,4,6]);
@@ -30,14 +31,18 @@ function Test(){
       
 }
 function GotResults(err, result){
+    var average = 0;
       var currentPrediction = result.label;
       //console.log(currentPrediction);
       predictedClassLabels.set(parseInt(result.label));
       numberPrediction+=1;
       //console.log(testingSampleIndex + ": " + predictedClassLabels.get(testingSampleIndex));
-      predictionAccuracyAverage = (((numberPrediction-1)*predictionAccuracyAverage) + (currentPrediction==7))/numberPrediction;
+      predictionAccuracyAverage = (((numberPrediction-1)*predictionAccuracyAverage) + (currentPrediction==digit))/numberPrediction;
       //console.log(predictionAccuracyAverage);
-      console.log(numberPrediction + " " + predictionAccuracyAverage + " " + currentPrediction);
+      //console.log(numberPrediction + " " + predictionAccuracyAverage + " " + currentPrediction);
+      console.log(predictionAccuracyAverage);
+ 
+      
   
 }
 function Handleframe(frame){
